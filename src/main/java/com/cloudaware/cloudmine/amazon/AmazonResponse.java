@@ -159,6 +159,12 @@ public class AmazonResponse<T extends AmazonWebServiceResult> {
                     || "StackSetNotFoundException".equals(errorCode)
                     || "DBSnapshotNotFound".equals(errorCode)
                     || "BackupNotFoundException".equals(errorCode)
+                    || "NoSuchHealthCheck".equals(errorCode)
+                    || "ClusterNotFound".equals(errorCode)
+                    || "DBClusterNotFoundFault".equals(errorCode)
+                    || "BranchDoesNotExistException".equals(errorCode)
+                    || "WAFNonexistentItemException".equals(errorCode)
+                    || "PipelineExecutionNotFoundException".equals(errorCode)
                     || ("InvalidParameterValue".equals(errorCode) && errorMessage.contains(":elasticbeanstalk:") && errorMessage.contains("does not exist"))
                     || ("InvalidParameterValue".equals(errorCode) && errorMessage.contains("No Solution Stack named"))
                     || ("InvalidParameterValue".equals(errorCode) && errorMessage.contains("Unable to resolve Ref. No data on parameter value"))
@@ -184,6 +190,8 @@ public class AmazonResponse<T extends AmazonWebServiceResult> {
                     // null (Service: AWSLambda; Status Code: 502; Error Code: null)
                     || ("lambda:ListFunctions".equals(action) && (statusCode == BAD_GATEWAY || statusCode == HTTP_GATEWAY_TIMEOUT))
                     || ("ds:DescribeDirectories".equals(action) && (statusCode == BAD_GATEWAY || statusCode == HTTP_GATEWAY_TIMEOUT))
+                    // Service: AWSDirectoryService "Could not get snapshot limits as directory d-9967340d7b is in Failed state"
+                    || ("ClientException".equals(errorCode) && errorMessage.contains("Could not get snapshot limits as directory"))
                     || (errorType == AmazonServiceException.ErrorType.Unknown && statusCode == HTTP_TEMPORARY_UNAVAILABLE)
                     //null (Service: AWSElasticBeanstalk; Status Code: 504; Error Code: 504 GATEWAY_TIMEOUT)
                     || (errorType == AmazonServiceException.ErrorType.Unknown && statusCode == HTTP_GATEWAY_TIMEOUT)) {
